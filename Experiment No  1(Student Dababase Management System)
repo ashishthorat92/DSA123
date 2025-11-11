@@ -1,0 +1,128 @@
+#include <stdio.h> 
+#include <string.h> 
+#define MAX 100
+#define SUBJECTS 5 
+struct Student {
+int rollNo;
+char name[50]; 
+char program[50]; 
+char course[50];
+float marks[SUBJECTS]; 
+float total;
+float average;
+};
+int count = 0;
+void addStudent(struct Student s[]) {
+printf("\nEnter details for student %d:\n", count + 1); 
+printf("Roll No: ");
+scanf("%d", &s[count].rollNo); 
+printf("Name: ");
+scanf(" %s", s[count].name); 
+printf("Program: ");
+scanf(" %s",s[count].program); 
+printf("Course: ");
+scanf("%s ", s[count].course); s[count].total = 0;
+for (int i = 0; i < SUBJECTS; i++) 
+{
+printf("Enter marks for subject %d: ", i + 1); 
+scanf("%f", &s[count].marks[i]);
+ 
+s[count].total += s[count].marks[i];
+}
+s[count].average = s[count].total / SUBJECTS; count++;
+}
+void displayAll(struct Student s[]) {
+printf("\n%-5s %-15s %-10s %-10s %-10s %-10s\n", "Roll", "Name", "Program", "Course", "Total", "Average"); 
+for (int i = 0; i < count; i++) {
+printf("%-5d %-15s %-10s %-10s %-10.2f %-10.2f\n", s[i].rollNo, s[i].name, s[i].program, s[i].course, s[i].total, s[i].average);
+}
+}
+void searchStudent(struct Student s[]) { 
+int roll;
+printf("Enter roll number to search: "); 
+scanf("%d", &roll);
+for (int i = 0; i < count; i++) { 
+if (s[i].rollNo == roll) {
+printf("\nStudent found:\n");
+printf("Name: %s\nProgram: %s\nCourse: %s\nTotal: %.2f\nAverage: %.2f\n", s[i].name, s[i].program, s[i].course, s[i].total, s[i].average);
+return;
+}
+}
+printf("Student not found!\n");
+}
+void modifyStudent(struct Student s[]) { int roll;
+printf("Enter roll number to modify: "); scanf("%d", &roll);
+for (int i = 0; i < count; i++) {
+ 
+if (s[i].rollNo == roll) {
+printf("Modifying student %s\n", s[i].name); 
+printf("New Name: ");
+scanf(" %[^\n]", s[i].name); 
+printf("New Program: "); 
+scanf(" %[^\n]", s[i].program);
+printf("New Course: ");
+scanf(" %[^\n]", s[i].course); 
+s[i].total = 0;
+for (int j = 0; j < SUBJECTS; j++) {
+printf("Enter new marks for subject %d: ", j + 1); 
+scanf("%f", &s[i].marks[j]);
+s[i].total += s[i].marks[j];
+}
+s[i].average = s[i].total / SUBJECTS; 
+printf("Record updated!\n");
+return;
+}
+}
+printf("Student not found!\n");
+}
+void sortByPerformance(struct Student s[]) { 
+struct Student temp;
+for (int i = 0; i < count - 1; i++) { 
+for (int j = i + 1; j < count; j++) {
+if (s[i].total < s[j].total) { 
+temp = s[i];
+s[i] = s[j]; 
+s[j] = temp;
+}
+}
+ 
+}
+printf("Sorted by performance (total marks).\n");
+}
+int main() {
+struct Student students[MAX]; 
+int choice;
+do {
+printf("\n------ Student Result Management---------\n");
+printf("1. Add Student\n"); 
+printf("2. Display All Students\n");
+printf("3. Search Student by Roll No\n"); 
+printf("4. Modify Student Record\n"); 
+printf("5. Sort by Performance\n"); 
+printf("6. Exit\n");
+printf("Enter your choice: "); 
+scanf("%d", &choice); 
+switch (choice) {
+case 1:
+addStudent(students); break;
+case 2:
+displayAll(students);
+break;
+case 3:
+searchStudent(students);
+break;
+case 4:
+modifyStudent(students); break;
+case 5:
+sortByPerformance(students);
+ 
+break; case 6:
+printf("Exiting...\n"); break;
+default:
+printf("Invalid choice! Try again.\n");
+}
+} while (choice != 6);
+
+
+return 0;
+}

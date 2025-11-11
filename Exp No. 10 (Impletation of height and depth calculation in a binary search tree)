@@ -1,0 +1,35 @@
+#include <stdio.h>
+ #include <string.h>
+
+char stack[100];
+ int top = -1;
+
+void push(char c) { stack[++top] = c; } 
+char pop() { return stack[top--]; }
+
+int isMatching(char open, char close) {
+return (open=='('&&close==')') || (open=='{'&&close=='}') || (open=='['&&close==']');
+}
+
+
+int isBalanced(char exp[]) { 
+for (int i = 0; exp[i]; i++) {
+char c = exp[i];
+if (c=='('||c=='{'||c=='[') push(c);
+else if (c==')'||c=='}'||c==']') {
+if (top==-1 || !isMatching(pop(), c)) return 0;
+}
+}
+return top==-1;
+}
+ 
+int main() {
+char exp[100]; 
+printf("Enter expression: "); 
+scanf("%s", exp);
+if (isBalanced(exp))
+printf("? Parentheses are Balanced\n"); 
+else
+printf("? Parentheses are NOT Balanced\n"); 
+return 0;
+}

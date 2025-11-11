@@ -1,0 +1,51 @@
+#include <stdio.h> 
+int main() {
+    
+int i, j, k, space; 
+int n;
+printf("Enter number of rows: "); 
+scanf("%d", &n);
+printf("\n--- Right-angle triangle with a number ---\n"); 
+for(i = 1; i <= n; i++) {
+for(j = 1; j <= i; j++) {
+printf("%d", i); // print same number in each row
+}
+printf("\n");
+}
+printf("\n--- Diamond shape with a number ---\n");
+// upper part
+for(i = 1; i <= n; i++) {
+for(space = i; space < n; space++) 
+printf(" ");
+for(j = 1; j <= (2*i - 1); j++)
+printf("%d", i);
+printf("\n");
+}
+// lower part
+for(i = n - 1; i >= 1; i--) {
+for(space = n; space > i; space--) 
+printf(" ");
+for(j = 1; j <= (2*i - 1); j++)
+printf("%d", i);
+printf("\n");
+}
+printf("\n--- Pyramid with an asterisk ---\n"); 
+for(i = 1; i <= n; i++) {
+for(space = i; space < n; space++) 
+printf(" ");
+for(j = 1; j <= (2*i - 1); j++)
+printf("*");
+printf("\n");
+}
+printf("\n--- Pyramid using the alphabet ---\n"); 
+for(i = 1; i <= n; i++) {
+for(space = i; space < n; space++) 
+printf(" ");
+for(j = 1; j <= i; j++) 
+printf("%c", 'A' + j - 1);
+for(j = i - 1; j >= 1; j--)
+printf("%c", 'A' + j - 1); 
+printf("\n");
+}
+return 0;
+}

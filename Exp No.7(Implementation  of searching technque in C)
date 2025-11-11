@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <string.h>
+
+// Sequential search
+int seq(char a[][50], int n, char k[]) { 
+    for (int i = 0; i < n; i++) {
+        if (!strcmp(a[i], k))
+            return i;
+    }
+    return -1;
+}
+
+// Binary search
+int bin(char a[][50], int n, char k[]) { 
+    int l = 0, h = n - 1, m;
+    while (l <= h) {
+        m = (l + h) / 2;
+        int c = strcmp(a[m], k);
+        if (c == 0)
+            return m;
+        else if (c < 0)
+            l = m + 1;
+        else
+            h = m - 1;
+    }
+    return -1;
+}
+
+// Sort the array alphabetically
+void sort(char a[][50], int n) { 
+    char t[50];
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (strcmp(a[i], a[j]) > 0) {
+                strcpy(t, a[i]);
+                strcpy(a[i], a[j]);
+                strcpy(a[j], t);
+            }
+        }
+    }
+}
+
+int main() {
+    char a[100][50], k[50];
+    int n, p;
+
+    printf("Enter number of contacts: ");
+    scanf("%d", &n);
+    getchar(); // consume newline
+
+    printf("Enter %d contact names:\n", n);
+    for (int i = 0; i < n; i++) {
+        fgets(a[i], sizeof(a[i]), stdin);
+        a[i][strcspn(a[i], "\n")] = '\0'; // remove newline
+    }
+
+    printf("Enter name to search: ");
+    fgets(k, sizeof(k), stdin);
+    k[strcspn(k, "\n")] = '\0'; // remove newline
+
+    // Sequential Search
+    if ((p = seq(a, n, k)) != -1)
+        printf("Sequential Search: Found at position %d\n", p + 1);
+    else
+        printf("Sequential Search: Not found\n");
+
+    // Sort and then Binary Search
+    sort(a, n);
+    if ((p = bin(a, n, k)) != -1)
+        printf("Binary Search: Found at position %d (in sorted list)\n", p + 1);
+    else
+        printf("Binary Search: Not found\n");
+
+    return 0;
+}
